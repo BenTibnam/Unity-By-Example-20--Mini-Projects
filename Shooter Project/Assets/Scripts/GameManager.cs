@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject target;
+    [SerializeField] private GameObject positiveTarget;
+    [SerializeField] private GameObject negativeTarget;
     [SerializeField] private Text scoreText;
     [SerializeField] private Image winningImage;
     private int score = 0;
@@ -40,6 +41,17 @@ public class GameManager : MonoBehaviour
             float x = Random.Range(-8.0f, 8.0f);
             float y = Random.Range(-4.0f, 4.0f);
 
+            int i = Random.Range(0, 5);
+            GameObject target;
+            if(i == 0)
+            {
+                target = negativeTarget;
+            }
+            else
+            {
+                target = positiveTarget;
+            }
+
             Instantiate(target, new Vector2(x, y), Quaternion.identity);
 
             if (gameRunTimeSeconds % 10 == 0 && timeBetweenSpawn > 0.5f)
@@ -71,9 +83,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void IncrementScore()
+    public void IncrementScore(string targetTag)
     {
-        score++; 
+        if (targetTag == "PositiveTarget")
+        {
+            score++;
+        }else
+        {
+            score--;
+        }
     }
 
     public int GetScore()

@@ -176,7 +176,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 8bfe9262539a07948a5b2c36a539ea50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -392,7 +392,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335970ffebce9e7428999de16f30365a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 5254831356214611622, guid: b701398b1904d204bbb962c2c094a149, type: 3}
+  positiveTarget: {fileID: 5254831356214611622, guid: b701398b1904d204bbb962c2c094a149,
+    type: 3}
+  negativeTarget: {fileID: 8149516329813328659, guid: 513f09cdd9bd7c64e91948dc6401f848,
+    type: 3}
   scoreText: {fileID: 1755488456}
   winningImage: {fileID: 2082083694}
 --- !u!4 &1798618315

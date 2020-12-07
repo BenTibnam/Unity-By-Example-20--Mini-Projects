@@ -13,7 +13,7 @@ public class Target : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnedTargets++;
-        Debug.Log("Spawned Targets: " + spawnedTargets.ToString());
+        Debug.Log("Tag: " + gameObject.tag);
     }
 
     // Update is called once per frame
@@ -25,6 +25,7 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         Destroy(gameObject);
+        Debug.Log(gameObject.tag);
     }
 
     public static int GetSpawnedTargets()
@@ -34,7 +35,7 @@ public class Target : MonoBehaviour
 
     private void OnDestroy()
     {
-        gameManager.IncrementScore();
+        gameManager.IncrementScore(gameObject.tag);
         spawnedTargets--;
         GameObject.Find("ScoreText").GetComponent<Text>().text = gameManager.GetScore().ToString();
     }
