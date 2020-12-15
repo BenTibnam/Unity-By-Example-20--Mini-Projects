@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
     private float timeBetweenSpawn = 3f;
 
     public const int TARGETS_ON_FAIL = 10;
-    public const int WINNING_SCORE = 10;
-    private bool gameRunning; 
+    public const int WINNING_SCORE = 50;
 
+    private bool gameRunning; 
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +29,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            GetComponent<AudioSource>().Play();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     void SpawnTarget()

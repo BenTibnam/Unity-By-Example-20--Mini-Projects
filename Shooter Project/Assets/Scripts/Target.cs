@@ -7,12 +7,14 @@ public class Target : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     private static int spawnedTargets = 0;
+    private bool destroyedByPlayer = false;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnedTargets++;
+        if(gameObject.tag == "NegativeTarget") Invoke("DestroyedAfterTime", 10);
         Debug.Log("Tag: " + gameObject.tag);
     }
 
@@ -22,8 +24,16 @@ public class Target : MonoBehaviour
         
     }
 
+    private void DestroyedAfterTime()
+    {
+        destroyedByPlayer = false;
+        Destroy(gameObject);
+        Debug.Log("DESTROYED BY TIMER");
+    }
+
     private void OnMouseDown()
     {
+        destroyedByPlayer = true;
         Destroy(gameObject);
         Debug.Log(gameObject.tag);
     }
@@ -35,7 +45,7 @@ public class Target : MonoBehaviour
 
     private void OnDestroy()
     {
-        gameManager.IncrementScore(gameObject.tag);
+        if(destroyedByPlayer) gameManager.IncrementScore(gameObject.tag);
         spawnedTargets--;
         GameObject.Find("ScoreText").GetComponent<Text>().text = gameManager.GetScore().ToString();
     }
