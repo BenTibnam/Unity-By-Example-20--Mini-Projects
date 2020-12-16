@@ -28,14 +28,15 @@ public class Target : MonoBehaviour
     {
         destroyedByPlayer = false;
         Destroy(gameObject);
-        Debug.Log("DESTROYED BY TIMER");
     }
 
     private void OnMouseDown()
     {
-        destroyedByPlayer = true;
-        Destroy(gameObject);
-        Debug.Log(gameObject.tag);
+        if (gameManager.GetScore() > -1 || gameManager.GetScore() < 50)
+        {
+            destroyedByPlayer = true;
+            Destroy(gameObject);
+        }
     }
 
     public static int GetSpawnedTargets()

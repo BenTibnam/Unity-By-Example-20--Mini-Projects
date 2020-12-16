@@ -29,14 +29,41 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GetComponent<AudioSource>().Play();
-        }
+        PlaySoundOnLeftClick();
+        CheckIfExitKeyPressed();
+        CheckIfRestartKeyPressed();
+        CheckIfScoreGreaterThenZero();
+    }
 
+    private void CheckIfRestartKeyPressed()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartScene();
+        }
+    }
+
+    private void CheckIfScoreGreaterThenZero()
+    {
+        if (score < 0)
+        {
+            gameRunning = false;
+        }
+    }
+
+    private static void CheckIfExitKeyPressed()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+    }
+
+    private void PlaySoundOnLeftClick()
+    {
+        if (Input.GetMouseButtonDown(0) && (score > -1 || score < 50))
+        {
+            GetComponent<AudioSource>().Play();
         }
     }
 
@@ -48,17 +75,8 @@ public class GameManager : MonoBehaviour
         {
             float x = Random.Range(-8.0f, 8.0f);
             float y = Random.Range(-4.0f, 4.0f);
-
-            int i = Random.Range(0, 5);
-            GameObject target;
-            if(i == 0)
-            {
-                target = negativeTarget;
-            }
-            else
-            {
-                target = positiveTarget;
-            }
+            
+            GameObject target = GetTargetType();
 
             Instantiate(target, new Vector2(x, y), Quaternion.identity);
 
@@ -66,12 +84,29 @@ public class GameManager : MonoBehaviour
             {
                 timeBetweenSpawn -= 0.5f;
             }
+
             Invoke("SpawnTarget", timeBetweenSpawn);
         }
         else
         {
             Invoke("RestartScene", 0.5f);
         }
+    }
+
+    private GameObject GetTargetType()
+    {
+        int i = Random.Range(0, 5);
+        GameObject target;
+        if (i == 0)
+        {
+            target = negativeTarget;
+        }
+        else
+        {
+            target = positiveTarget;
+        }
+
+        return target;
     }
 
     private void RestartScene()
